@@ -53,6 +53,11 @@ public class ChessServlet extends HttpServlet {
 				String fh= (String)request.getParameter("filahasta");
 
 				mov = capaNegocio.movimiento(cd, fd, ch, fh);
+				if(!capaNegocio.juegoIniciado()){
+					session.invalidate();
+					request.setAttribute("mov", mov);
+					request.getRequestDispatcher("finDelJuego.jsp").forward(request, response);
+				}
 				session.setAttribute("mov",mov);
 				session.setAttribute("turno", capaNegocio.getTurno());
 				session.setAttribute("piezasblancas", capaNegocio.confirmarPiezas(0));
